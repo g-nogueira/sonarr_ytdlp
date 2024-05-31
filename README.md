@@ -1,4 +1,11 @@
-# sonarr_youtubedl by [@whatdaybob](https://github.com/whatdaybob)
+# sonarr_ytdlp (fork of sonarr_youtubedl)
+
+This fork aims to solve some of the problems I faced wheile using the repo.
+
+**Why?** Because the original repo has quite a few open PRs that are already stale. Some of there PR's were already ready to merge but were never merged.  
+**What issues do I have?** I will be opening the issues on the original repo and solving them here, trying to open PRs there when possible.
+
+---
 
 ![Docker Build](https://img.shields.io/docker/cloud/automated/whatdaybob/sonarr_youtubedl?style=flat-square)
 ![Docker Pulls](https://img.shields.io/docker/pulls/whatdaybob/sonarr_youtubedl?style=flat-square)

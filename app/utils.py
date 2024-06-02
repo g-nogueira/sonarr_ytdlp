@@ -88,11 +88,7 @@ def upperescape(string, title_format):
         return string
 
 
-    try:
-        string = apply_custom_formats(string, title_format)
-    except Exception as e:
-        # Handle the exception here
-        print(f"An error occurred: {str(e)}")
+    string = apply_custom_formats(string, title_format)
 
     return string
 

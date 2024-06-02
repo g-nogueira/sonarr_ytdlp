@@ -178,11 +178,8 @@ class SonarrYTDL(object):
         return res.json()
 
     def filterseries(self):
-        def bool (val):
-            if val.lower() == 'true' or val == '1':
-                return True
-            else:
-                return False
+        def bool(val):
+            return val.lower() == 'true' or val == '1'
 
         """Return all series in Sonarr that are to be downloaded by yt-dlp"""
         series = self.get_series()

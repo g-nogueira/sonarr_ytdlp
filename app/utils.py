@@ -11,31 +11,85 @@ CONFIGFILE = os.environ['CONFIGPATH']
 # CONFIGPATH = CONFIGFILE.replace('config.yml', '')
 
 
-def upperescape(string):
+def upperescape(string, title_format):
     """Uppercase and Escape string. Used to help with YT-DL regex match.
     - ``string``: string to manipulate
+    - ``title_format``: dict with format options
+    - ``title_format.apply_default_format``: bool to use default format or not
+    - ``title_format.make_ponctuation_optional``: bool to make ponctuations optional or not
+    - ``title_format.prepend``: string to prepend to string
+    - ``title_format.append``: string to append to string
+    - ``title_format.remove_quotes``: bool to remove quotes
+    - ``title_format.replace``: dict with string replacements
+    - ``title_format.replace.key``: string to replace
+    - ``title_format.replace.value``: string to replace with
+
 
     returns:
         ``string``: str new string
     """
-    # UPPERCASE as YTDL is case insensitive for ease.
-    string = string.upper() 
-    # Remove quote characters as YTDL converts these.
-    string = string.replace('’',"'") 
-    string = string.replace('“','"')
-    string = string.replace('”','"')
-    # Escape the characters
-    string = re.escape(string)
-    # Make it look for and as whole or ampersands
-    string = string.replace('\\ AND\\ ','\\ (AND|&)\\ ')
-    # Make punctuation optional for human error
-    string = string.replace("'","([']?)") # optional apostrophe
-    string = string.replace(",","([,]?)") # optional comma
-    string = string.replace("!","([!]?)") # optional question mark
-    string = string.replace("\\.","([\\.]?)") # optional period
-    string = string.replace("\\?","([\\?]?)") # optional question mark
-    string = string.replace(":","([:]?)") # optional colon
-    string = re.sub("S\\\\", "([']?)"+"S\\\\", string) # optional belonging apostrophe (has to be last due to question mark)
+
+    def remove_quotes(string):
+        """ Replaces Punctuation Apostrophes by Typewriter Apostrophes
+        See https://en.wikipedia.org/wiki/Apostrophe
+        """
+        string = string.replace('’',"'") 
+        string = string.replace('“','"')
+        string = string.replace('”','"')
+
+        return string
+
+    def make_ponctuation_optional(string):
+        string = string.replace("'","([']?)") # optional apostrophe
+        string = string.replace(",","([,]?)") # optional comma
+        string = string.replace("!","([!]?)") # optional question mark
+        string = string.replace("\\.","([\\.]?)") # optional period
+        string = string.replace("\\?","([\\?]?)") # optional question mark
+        string = string.replace(":","([:]?)") # optional colon
+
+        return string
+
+    def use_default_format(string):
+        # UPPERCASE as YTDL is case insensitive for ease.
+        string = string.upper()
+
+        # Remove quote characters as YTDL converts these.
+        string = remove_quotes(string)
+
+        # Escape the characters
+        string = re.escape(string)
+
+        # Make it look for and as whole or ampersands
+        string = string.replace('\\ AND\\ ','\\ (AND|&)\\ ')
+
+        # Make punctuation optional for human error
+        string = make_ponctuation_optional(string)
+    
+        string = re.sub("S\\\\", "([']?)"+"S\\\\", string) # optional belonging apostrophe (has to be last due to question mark)
+
+        return string
+
+    def apply_custom_formats(string, title_format):
+        for key, value in title_format.items():
+            if key == 'apply_default_format' and value == True:
+                string = use_default_format(string)
+            if key == 'make_ponctuation_optional' and value == True:
+                string = make_ponctuation_optional(string)
+            if key == 'prepend':
+                string = value + string
+            if key == 'append':
+                string = string + value
+            if key == 'remove_quotes' and value == True:
+                string = remove_quotes(string)
+            if key == 'replace' and value is not None:
+                for key, value in value.items():
+                    string = string.replace(key, value)
+        
+        return string
+
+
+    string = apply_custom_formats(string, title_format)
+
     return string
 
 

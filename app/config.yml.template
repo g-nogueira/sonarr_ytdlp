@@ -47,22 +47,20 @@ series:
     playlistreverse: False
     # The formats to be applied to the title comming from Sonarr to, then, match against the title comming frm yt-dlp
     title_format:
+      # Should come first, as it will make the title upper case and scape any special characters
+      # It will:
+      # - Uppercase the title
+      # - Remove quotes
+      # - Escape special characters
+      # - Replace ' AND ' with ' (AND|&) '
+      # - Make common ponctuations optional (i.e., ',!.?:)
+      # - Add apostrophes to the end of words that end with 'S'
+      apply_default_format: True
+      replace:
+        "HAVE": "HAVE( [A]?)"
+        "\\(1\\)": "\\((PART )?1\\)$"
       prepend: "^.*"
       append: ".*$"
-      # Applies the formats below and some more
-      apply_default_format: True
-      ## Replaces Punctuation Apostrophes by Typewriter Apostrophes. # See https://en.wikipedia.org/wiki/Apostrophe
-      # remove_quotes: True
-      # # Replaces ponctuations by optional ponctuations, like the example below
-      # make_ponctuation_optional: True
-      # replace:
-      #   # Make it look for and as whole or ampersands
-      #   "\\sAND\\s": "\\s(AND|&)\\s"
-      #   # Make punctuation optional for human error
-      #   "'": "([']?)"
-      #   ",": "([,]?)"
-      #   "!": "([!]?)"
-      #   "\\.": "([\\.]?)"
-      #   "\\?": "([\\?]?)" 
-      #   ":": "([:]?)"
-
+      # Other possible options:
+      # remove_quotes: True # Replaces Punctuation Apostrophes by Typewriter Apostrophes. Used by apply_default_format
+      # make_ponctuation_optional: True # Replaces ponctuations by optional ponctuations. Used by apply_default_format

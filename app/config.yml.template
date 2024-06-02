@@ -65,16 +65,16 @@ series:
       # remove_quotes: True # Replaces Punctuation Apostrophes by Typewriter Apostrophes. Used by apply_default_format
       # make_ponctuation_optional: True # Replaces ponctuations by optional ponctuations. Used by apply_default_format
 
-      # The options to be passed to yt-dlp. See more on https://github.com/yt-dlp/yt-dlp/blob/db50f19d76c6870a5a13d0cab9287d684fd7449a/yt_dlp/YoutubeDL.py#L176
-      ytdlp:
-        username: "yourusername"
-        password: "yourpassword"
-        extractor_args: 
-          crunchyrollbeta:
-            hardsub: 
-              - pt-BR
-        impersonate: ""
-        http_headers:
-          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
-        # Used for merging the video and audio files. Only applicable if debugging the code. The image already includes the ffmpeg binary
-        ffmpeg_location: "C:\\ProgramData\\chocolatey\\lib\\ffmpeg\\tools\\ffmpeg\\bin" 
+    # The options to be passed to yt-dlp. See more on https://github.com/yt-dlp/yt-dlp/blob/db50f19d76c6870a5a13d0cab9287d684fd7449a/yt_dlp/YoutubeDL.py#L176
+    ytdlp:
+      username: "yourusername"
+      password: "yourpassword"
+      extractor_args: 
+        crunchyrollbeta:
+          hardsub: 
+            - pt-BR
+      impersonate: ""
+      http_headers:
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
+      # Used for merging the video and audio files. Only applicable if debugging the code. The image already includes the ffmpeg binary
+      ffmpeg_location: "C:\\ProgramData\\chocolatey\\lib\\ffmpeg\\tools\\ffmpeg\\bin" 

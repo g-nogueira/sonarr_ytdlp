@@ -318,14 +318,15 @@ class SonarrYTDL(object):
         else:
             return ytdlopts
 
-    def ytdl_eps_search_opts(self, regextitle, playlistreverse, cookies=None):
-        ytdlopts = {
+    def ytdl_eps_search_opts(self, regextitle, playlistreverse, ytdlp_options, cookies=None):
+        ytdlopts = ytdlp_options
+        ytdlopts.update({
             'ignoreerrors': True,
             'playlistreverse': playlistreverse,
             'matchtitle': regextitle,
             'quiet': True,
+        })
 
-        }
         if self.debug is True:
             ytdlopts.update({
                 'quiet': False,
@@ -375,11 +376,17 @@ class SonarrYTDL(object):
                         url = ser['url']
                         if 'cookies_file' in ser:
                             cookies = ser['cookies_file']
-                        ydleps = self.ytdl_eps_search_opts(upperescape(eps['title'], ser['title_format']), ser['playlistreverse'], cookies)
+                        ydleps = self.ytdl_eps_search_opts(upperescape(eps['title'], ser['title_format']), ser['playlistreverse'], ser['ytdlp_options'], cookies)
                         found, dlurl = self.ytsearch(ydleps, url)
                         if found:
                             logger.info("    {}: Found - {}:".format(e + 1, eps['title']))
-                            ytdl_format_options = {
+
+                            ytdl_format_options = {}
+
+                            if 'ytdlp_options' in ser:
+                                ytdl_format_options = ser['ytdlp_options']
+
+                            ytdl_format_options.update({
                                 'format': self.ytdl_format,
                                 'quiet': True,
                                 'merge-output-format': 'mp4',
@@ -392,7 +399,7 @@ class SonarrYTDL(object):
                                 ),
                                 'progress_hooks': [ytdl_hooks],
                                 'noplaylist': True,
-                            }
+                            })
                             ytdl_format_options = self.appendcookie(ytdl_format_options, cookies)
                             if 'format' in ser:
                                 ytdl_format_options = self.customformat(ytdl_format_options, ser['format'])

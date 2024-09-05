@@ -1,10 +1,14 @@
 # sonarr_ytdlp (fork of sonarr_youtubedl)
 
-This fork aims to solve some of the problems I faced wheile using the repo.
+This fork aims to solve some of the problems I faced while using the repo.
 
-**Why?** Because the original repo has quite a few open PRs that are already stale. Some of there PR's were already ready to merge but were never merged.  
+**Why?** Because the original repo has quite a few open PRs that are already stale. Some of the PR's were already ready to merge but were never merged.  
 **What issues do I have?** I will be opening the issues on the original repo and solving them here, trying to open PRs there when possible.
 
+**Fixed Issues**
+- Error "This episode is for premium members only" from Crunchyroll [#6](https://github.com/g-nogueira/sonarr_ytdlp/issues/6)
+- Error "Unable to extract initial state" on yt-dlp [#4](https://github.com/g-nogueira/sonarr_ytdlp/issues/4)
+- Message "title did not match pattern" on most of the episodes from Crunchyroll [#2](https://github.com/g-nogueira/sonarr_ytdlp/issues/2)
 ---
 
 ![Docker Build](https://img.shields.io/docker/cloud/automated/whatdaybob/sonarr_youtubedl?style=flat-square)
